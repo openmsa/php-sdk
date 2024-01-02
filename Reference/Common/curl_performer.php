@@ -13,14 +13,20 @@ require_once COMMON_DIR . 'utility.php';
 function create_msa_operation_request ($operation, $msa_rest_api, $json_body = "",
 										$connection_timeout = 60, $max_time = 60) {
 
-	global $CURL_CMD, $context;
+	global $CURL_CMD;
 	
 	$HTTP_HOST = "localhost"; // get_vars_value(WEB_NODE_PRIV_IP)"";
 	$HTTP_PORT = "8480";  // get_vars_value(WEB_NODE_HTTP_PORT);
-	$USERNAME = "ncroot";
-	//$NCROOT_PASSWORD = get_vars_value(NCROOT_PASSWORD_VARIABLE);
-	$password = "ubiqube"; //shell_exec(ENCP_SCRIPT . ' ' . $NCROOT_PASSWORD);
-	$auth_token = $context['TOKEN'];
+	
+	$url = getenv("API_TOKEN_URL") !== false ? getenv("API_TOKEN_URL") : "http://msa-auth:8080/auth/realms/main/protocol/openid-connect/token";
+	$params = [
+		"client_id" => getenv("CLIENT_ID"),
+		"grant_type" => "client_credentials",
+		"client_secret" => getenv("CLIENT_SECRET")
+	];
+	$response = requests_post($url, $params);
+	$data = json_decode($response, true);
+	$auth_token = $data["access_token"];
 
 	if (strpos($msa_rest_api, "?") !== false) {
 		list($uri, $data) = explode("?", $msa_rest_api);
@@ -442,6 +448,16 @@ function encode_uri($uri) {
 		}
 	}
 	return $encoded_uri;
+}
+
+function requests_post($url, $params) {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($ch);
+	curl_close($ch);
+	return $response;
 }
 
 ?>
