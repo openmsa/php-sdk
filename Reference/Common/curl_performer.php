@@ -18,7 +18,7 @@ function create_msa_operation_request ($operation, $msa_rest_api, $json_body = "
 	$HTTP_HOST = "localhost"; // get_vars_value(WEB_NODE_PRIV_IP)"";
 	$HTTP_PORT = "8480";  // get_vars_value(WEB_NODE_HTTP_PORT);
 	
-	$url = getenv("API_TOKEN_URL") !== false ? getenv("API_TOKEN_URL") : "http://msa-auth:8080/auth/realms/main/protocol/openid-connect/token";
+	$url = getenv("API_TOKEN_URL") !== false ? getenv("API_TOKEN_URL") : "http://msa-auth:8080/auth/realms/msa/protocol/openid-connect/token";
 	$params = [
 		"client_id" => getenv("CLIENT_ID"),
 		"grant_type" => "client_credentials",
