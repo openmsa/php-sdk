@@ -6,7 +6,7 @@ RUN install_default_dirs.sh
 
 COPY . .
 # Build tarball {{{
-RUN cp -R . /opt/fmc_repository/php_sdk && \
+RUN cp -R . /opt/fmc_repository/php-sdk && \
     install_repo_deps.sh /opt/fmc_repository/php-sdk && \
     echo "⏳ Creating php-sdk-reference.tar.xz" && \
     chmod a+w -R /opt/fmc_repository/ && \
@@ -18,9 +18,8 @@ FROM docker.io/ubiqube/ubi-almalinux10:latest
 RUN mkdir -p /opt/fmc_repository && chown -R 1000:1000 /opt/fmc_repository
 USER 1000
 COPY --from=builder /home/ncuser/*.xz /home/ncuser/
-COPY --from=builder /usr/share/install-libraries/il-lib.sh /usr/share/install-libraries/il-lib.sh
 COPY docker-entrypoint.sh /
-COPY install.sh /home/ncuser/
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 # }}}
 

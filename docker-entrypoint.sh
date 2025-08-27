@@ -20,12 +20,12 @@ then
 fi
 cd / || exit 1
 
-if [[ -f /opt/fmc_repository/php_sdk/.git ]]; then
+if [[ -f /opt/fmc_repository/php-sdk/.git ]]; then
 	log_info "👾 Skipping upgrade for fellow developer."
 	exit 0
 fi
 tar --overwrite --no-same-owner -xf /home/ncuser/php-sdk-reference.tar.xz -I 'xz -T0' --checkpoint=1000 --checkpoint-action=echo='%{%Y-%m-%d %H:%M:%S}t⏳ \033[1;37m(%d sec)\033[0m: \033[1;32m#%u\033[0m, \033[0;33m%{}T\033[0m'
-/home/ncuser/install.sh
+
 echo "✅ Sucess ..."
 
 
