@@ -62,6 +62,7 @@ jobs:
 
       - name: Notify msa-docker repo about updated ${{ env.CONTAINER_NAME }} Docker image
         uses: benc-uk/workflow-dispatch@v1
+        if: github.event_name != 'pull_request'
         with:
           token: ${{ secrets.MSA_DOCKER_REPO_ACCESS_TOKEN }}
           ref: ${{ github.ref_name || 'master' }}
