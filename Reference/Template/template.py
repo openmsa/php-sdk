@@ -16,9 +16,11 @@ The allowed types are:
  Add as many variables as needed
 '''
 dev_var = Variables()
+
 dev_var.add('var_name', var_type='String')
 dev_var.add('var_name2', var_type='Integer')
 
+context = Variables.task_call(dev_var)
 '''
 context => Service Context variable per Service Instance
 All the user-inputs of Tasks are automatically stored in context
@@ -28,10 +30,9 @@ Update context array [add/update/delete variables] as per requirement
 
 ENTER YOUR CODE HERE
 '''
-context = Variables.task_call(dev_var)
 context['var_name2'] = int(context['var_name2']) + 1
-
 '''
+
 Format of the Task response :
 JSON format : {"wo_status":"status","wo_comment":"comment","wo_newparams":{json_body}}
 wo_status : ENDED [Green color] or FAILED [Red color] or WARNING [Orange color]
