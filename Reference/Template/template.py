@@ -17,8 +17,8 @@ The allowed types are:
 '''
 dev_var = Variables()
 
-dev_var.add('var_name', var_type='String')
-dev_var.add('var_name2', var_type='Integer')
+dev_var.add('var_name')
+dev_var.add('var_name2')
 
 context = Variables.task_call(dev_var)
 '''
